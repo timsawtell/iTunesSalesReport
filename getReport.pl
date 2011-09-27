@@ -12,6 +12,8 @@ sub doDatabaseInsert;
 # to be the path to this file (so that you can read in the properties file
 chdir "/full/patht/to/this/file";
 
+#the java exe must be on your environment PATH variable!
+
 my ($uname, $pwd, $vendorID, $dateType, $reportType, $reportSubType, $databaseFilename, $daysBefore);
 $daysBefore=2; #default value, can be overridden
 open my $in, "report.properties" or die $!;
