@@ -1,0 +1,7 @@
+You will need perl, java RE (JRE) and SQLite executables available on your PATH variable
+
+If you want to set this to run automatically via cron or any other scheduling tool, please provide the full path to the java executable in the $theCmd variable, like so:
+$theCmd = "/full/path/to/javaExecutable Autoingestion ...
+
+Please modify the report.properties to suit your iTunes details
+Please modify the getReport.pl script to set the chdir '/blah' line 
