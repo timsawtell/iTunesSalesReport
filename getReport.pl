@@ -91,6 +91,7 @@ if ($? != 0) {
             }
             # parse the results file
             my $databasResult = doDatabaseInsert($dirName, $newFilename);
+ 			my $grd = sendReadableData($dirName, $newFilename);
         }
     } else {
         print "Report already exists, skipping DB insert\n";
@@ -133,6 +134,29 @@ sub doDatabaseInsert {
     $dbh->disconnect();
     print "Report data has been inserted into db: $databaseFilename\n";
     
+}
+
+sub sendReadableData {
+  my($dirName, $fileName) = @_;
+  my $outputString = "";
+  my $totalProceeds = 0;
+  open (FILE, $dirName . '/' . $fileName);
+  while (<FILE>) {
+    chomp;
+        
+    my ($Provider, $ProviderCountry, $SKU, $Developer, $Title, $Version, $ProductTypeIdentifier, $Units, $DeveloperProceeds, $BeginDate, $EndDate,$CustomerCurrency, $CountryCode, $CurrencyOfProceeds, $AppleIdentifier, $CustomerPrice, $PromoCode, $ParentIdentifier, $Subscription, $Period) = split("\t");
+        
+    next if ($SKU eq "SKU");
+    
+    $outputString .= $Title . "($CountryCode): " . $Units . " \@ " . $CustomerPrice . "(net: $DeveloperProceeds)\n";
+    my $thisDaysProceeds = $Units * $DeveloperProceeds;
+    $totalProceeds += $thisDaysProceeds; 
+  }
+  $outputString .= "\nTotal Net Takings: $totalProceeds";
+  #$outputString .= "\n\nTotal Net Takings: " . $totalProceeds"; 
+  print $outputString . "\n";
+
+  my $myEmailRes = `echo "$outputString" | mail -s "Daily Sales $theDate" youremail\@provider.com`;
 }
 
 print "\n";
