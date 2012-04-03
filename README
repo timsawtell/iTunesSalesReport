@@ -1,4 +1,4 @@
-Run a Perl script, which will run use the Apple provided AutoIngestion.class file and pipe the data into an SQLite database.
+getReport.pl will call the Apple provided AutoIngestion.class file and pipe the data into an SQLite database.
 
 Set this up with scheduling tools and you'll get daily emails giving you a consise summary of all your app sales per day.
 
